@@ -194,7 +194,7 @@ K_w[-1] = K_w_right
 #  \frac{\partial w}{\partial t} = - \frac{\partial}{\partial x}\left(K \cdot \frac{\partial P_{suc}}{\partial x}\right)
 # $$ (eq_dw_dt_simp_ges)
 # 
-# Da sowohl $K$ als auch $P_{suc}$ vom Ort abhängig sind führt Anwendung der Produktregel auf Gleichung {eq}`eq_dw_dt_simp_ges` auf Gleichung {eq}`eq_dw_dt_simp_ges_prod`.
+# Da sowohl $K$ als auch $P_{suc}$ vom Ort abhängig sind führt Anwendung der Produktregel bei Gleichung {eq}`eq_dw_dt_simp_ges` auf Gleichung {eq}`eq_dw_dt_simp_ges_prod`.
 # 
 # $$
 # \frac{\partial w}{\partial t} = - \frac{\partial K}{\partial x} \cdot \frac{\partial P_{suc}}{\partial x} + K \cdot \frac{\partial^{2} P_{suc}}{\partial x^{2}}
