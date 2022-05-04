@@ -5,7 +5,7 @@
 # # Flüssigwassertransport - Numerische Anwendung
 # In diesem Kapitel sollen die dem Flüssigwassertransport zu Grunde liegenden Differentialgleichungen in einem einfachen numerischen Modell angewendet werden. Die verwendeten Gleichungen stützen sich auf die Ausführungen in {ref}`FL_Theorie` und {cite}`AngelaSasicKalagasidis.2004`.
 # 
-# Zur numerischen Lösung der beschreibenden Differentialgleichung werden wir uns folgender Bibliotheken und Funktionen bedienen:
+# Die zur numerischen Lösung der beschreibenden Differentialgleichung verwendeten Bibliotheken und Funktionen können hier eingeblendet werden.
 
 # In[1]:
 
@@ -129,6 +129,10 @@ def P_suc_calc(w, free_saturation, pore_size):
 # In[3]:
 
 
+#-------------------#
+#     INPUT         #
+#-------------------#
+
 # Sample size
 length = 0.2  # meters
 resolution = 200 + 2
@@ -137,6 +141,8 @@ n = 13
 pore_size = 10 ** (-6)
 A = 10.0  # kg/m**2h**0.5  Moisture uptake coefficient
 initial_saturation = 1 / 100 * free_saturation
+
+#----------------------------------------------------#
 
 # Discretization Scheme
 dx = length / (resolution - 2)
@@ -151,8 +157,12 @@ dwdt = np.zeros(resolution)
 
 # > Resolution ist ein 1D-Array mit der Anzahl an Einträgen welche den Diskretisierungspunkten des Probekörpers entspricht plus 2 für die Randbedingungen.
 
+# ```{admonition} Hinweis
+# Hier können Sie die Eingabeparameter anpassen um z.B. Ihren Aufsaugversuch aus der {ref}`LU_FL` nachzurechnen
+# ```
+
 # ### Randbedingungen
-# Die Randbedingungen werden für das Beispiel mit $w_{left} = 300 kg/m³$ und $w_{right} = 60 kg/m³$ vorgegeben. Wir initialisieren die Randbedingungen entsprechend und berechnen auch für die anderen Parameter, welche vom Wassergehalt abhängig sind, die Randbedingungen.
+# Die Randbedingungen werden für das Beispiel mit $w_{left} = 300\ kg/m³$ und $w_{right} = 60\ kg/m³$ vorgegeben. Wir initialisieren die Randbedingungen entsprechend und berechnen auch für die anderen Parameter, welche vom Wassergehalt abhängig sind, die Randbedingungen.
 
 # In[4]:
 
@@ -241,7 +251,10 @@ def dwdt_calc(t, w):
 # In[6]:
 
 
-# %%
+#-------------------#
+#     INPUT         #
+#-------------------#
+
 w0 = w[:]
 
 t0 = 0  # Start time in hours
@@ -260,7 +273,7 @@ t_eval = np.linspace(t0, tf, 100)
 #       Solve
 # ---------------------
 
-print('Solving the differential equation...')
+print('Solving the differential equation...\n(Ignore error messages due to numerics.)')
 # sol = solve_ivp(dwdt_calc, (t0, tf), w0, t_eval=t_eval, dense_output=False, method='Radau', atol=1e-7, rtol=1e-5)
 sol = solve_ivp(dwdt_calc, (t0, tf), w0, t_eval=t_eval, dense_output=False, atol=1e-7, rtol=1e-5)
 
@@ -280,7 +293,6 @@ print('Done.')
 
 # Moisture content distribution in discretized specimen
 w_cell = w[1:-1]
-
 plt.plot(x, w_cell)
 plt.grid()
 plt.axis([0, 0.2, 0, 400])

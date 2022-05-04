@@ -227,11 +227,11 @@ const thebe_selector_output = ".output, .cell_output"
         aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
     <div class="dropdown-buttons sourcebuttons">
         <a class="repository-button"
-            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+            href="https://github.com/andreass0/BPH3_Skriptum_JP_Book"><button type="button" class="btn btn-secondary topbarbtn"
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FFL_Numerik.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/andreass0/BPH3_Skriptum_JP_Book/issues/new?title=Issue%20on%20page%20%2FFL_Numerik.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -252,7 +252,7 @@ const thebe_selector_output = ".output, .cell_output"
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/FL_Numerik.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/andreass0/BPH3_Skriptum_JP_Book/master?urlpath=tree/FL_Numerik.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="_static/images/logo_binder.svg"
@@ -450,8 +450,8 @@ const thebe_selector_output = ".output, .cell_output"
   <div class="tex2jax_ignore mathjax_ignore section" id="flussigwassertransport-numerische-anwendung">
 <span id="fl-numerik"></span><h1>Flüssigwassertransport - Numerische Anwendung<a class="headerlink" href="#flussigwassertransport-numerische-anwendung" title="Permalink to this headline">¶</a></h1>
 <p>In diesem Kapitel sollen die dem Flüssigwassertransport zu Grunde liegenden Differentialgleichungen in einem einfachen numerischen Modell angewendet werden. Die verwendeten Gleichungen stützen sich auf die Ausführungen in <a class="reference internal" href="FL_Theorie.html#fl-theorie"><span class="std std-ref">Flüssigwassertransport - Theorie</span></a> und <span id="id1">[<a class="reference internal" href="References.html#id3" title="Angela Sasic Kalagasidis, Thomas Bednar, and Carl-Eric Hagentoft. The evaluation of the interface moisture conductivity between control volumes. comparison between linear, harmonic and integral averaging. 9th International Conference on Performance of the Exterior Envelopes of Whole Buildings. Clearwater Beach, Florida, 2004, 2004. URL: https://research.chalmers.se/en/publication/523363.">Angela Sasic Kalagasidis <em>et al.</em>, 2004</a>]</span>.</p>
-<p>Zur numerischen Lösung der beschreibenden Differentialgleichung werden wir uns folgender Bibliotheken und Funktionen bedienen:</p>
-<div class="cell docutils container">
+<p>Die zur numerischen Lösung der beschreibenden Differentialgleichung verwendeten Bibliotheken und Funktionen können hier eingeblendet werden.</p>
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Matrixoperationen:</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -596,7 +596,11 @@ K_{w}(P_{suc}, n) = - \frac{\partial w(P_{suc})}{\partial P_{suc}} \cdot \frac{n
 <p>Eingangsparameter und Anfangswerte für solch eine Simulation könnten folgendermaßen aussehen:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sample size</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#-------------------#</span>
+<span class="c1">#     INPUT         #</span>
+<span class="c1">#-------------------#</span>
+
+<span class="c1"># Sample size</span>
 <span class="n">length</span> <span class="o">=</span> <span class="mf">0.2</span>  <span class="c1"># meters</span>
 <span class="n">resolution</span> <span class="o">=</span> <span class="mi">200</span> <span class="o">+</span> <span class="mi">2</span>
 <span class="n">free_saturation</span> <span class="o">=</span> <span class="mf">300.</span>
@@ -604,6 +608,8 @@ K_{w}(P_{suc}, n) = - \frac{\partial w(P_{suc})}{\partial P_{suc}} \cdot \frac{n
 <span class="n">pore_size</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">)</span>
 <span class="n">A</span> <span class="o">=</span> <span class="mf">10.0</span>  <span class="c1"># kg/m**2h**0.5  Moisture uptake coefficient</span>
 <span class="n">initial_saturation</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">free_saturation</span>
+
+<span class="c1">#----------------------------------------------------#</span>
 
 <span class="c1"># Discretization Scheme</span>
 <span class="n">dx</span> <span class="o">=</span> <span class="n">length</span> <span class="o">/</span> <span class="p">(</span><span class="n">resolution</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
@@ -621,10 +627,14 @@ K_{w}(P_{suc}, n) = - \frac{\partial w(P_{suc})}{\partial P_{suc}} \cdot \frac{n
 <blockquote>
 <div><p>Resolution ist ein 1D-Array mit der Anzahl an Einträgen welche den Diskretisierungspunkten des Probekörpers entspricht plus 2 für die Randbedingungen.</p>
 </div></blockquote>
+<div class="admonition-hinweis admonition">
+<p class="admonition-title">Hinweis</p>
+<p>Hier können Sie die Eingabeparameter anpassen um z.B. Ihren Aufsaugversuch aus der <a class="reference internal" href="LU_FL.html#lu-fl"><span class="std std-ref">Laborübung - Aufsaugversuch</span></a> nachzurechnen</p>
+</div>
 </div>
 <div class="section" id="randbedingungen">
 <h3>Randbedingungen<a class="headerlink" href="#randbedingungen" title="Permalink to this headline">¶</a></h3>
-<p>Die Randbedingungen werden für das Beispiel mit <span class="math notranslate nohighlight">\(w_{left} = 300 kg/m³\)</span> und <span class="math notranslate nohighlight">\(w_{right} = 60 kg/m³\)</span> vorgegeben. Wir initialisieren die Randbedingungen entsprechend und berechnen auch für die anderen Parameter, welche vom Wassergehalt abhängig sind, die Randbedingungen.</p>
+<p>Die Randbedingungen werden für das Beispiel mit <span class="math notranslate nohighlight">\(w_{left} = 300\ kg/m³\)</span> und <span class="math notranslate nohighlight">\(w_{right} = 60\ kg/m³\)</span> vorgegeben. Wir initialisieren die Randbedingungen entsprechend und berechnen auch für die anderen Parameter, welche vom Wassergehalt abhängig sind, die Randbedingungen.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># BC</span>
@@ -705,7 +715,10 @@ w = \int_{}^{} \frac{\partial w}{\partial t} \,dt
 <p>Festlegen der zu berechnenden Zeitdauer und des Anfangswertes für den Solver:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %%</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#-------------------#</span>
+<span class="c1">#     INPUT         #</span>
+<span class="c1">#-------------------#</span>
+
 <span class="n">w0</span> <span class="o">=</span> <span class="n">w</span><span class="p">[:]</span>
 
 <span class="n">t0</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Start time in hours</span>
@@ -718,13 +731,13 @@ w = \int_{}^{} \frac{\partial w}{\partial t} \,dt
 </div>
 </div>
 <p>Lösen der Differentialgleichung und Berechnung des Integrals mittels Solver:</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-output docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ----------------------</span>
 <span class="c1">#       Solve</span>
 <span class="c1"># ---------------------</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Solving the differential equation...&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Solving the differential equation...</span><span class="se">\n</span><span class="s1">(Ignore error messages due to numerics.)&#39;</span><span class="p">)</span>
 <span class="c1"># sol = solve_ivp(dwdt_calc, (t0, tf), w0, t_eval=t_eval, dense_output=False, method=&#39;Radau&#39;, atol=1e-7, rtol=1e-5)</span>
 <span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">dwdt_calc</span><span class="p">,</span> <span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">tf</span><span class="p">),</span> <span class="n">w0</span><span class="p">,</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">t_eval</span><span class="p">,</span> <span class="n">dense_output</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-7</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">)</span>
 
@@ -737,6 +750,7 @@ w = \int_{}^{} \frac{\partial w}{\partial t} \,dt
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Solving the differential equation...
+(Ignore error messages due to numerics.)
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>d:\onedrive - tu wien\vorlesungen\bph3\bph3_skriptum_jp_book\venv\lib\site-packages\ipykernel_launcher.py:8: RuntimeWarning: divide by zero encountered in true_divide
@@ -764,11 +778,10 @@ d:\onedrive - tu wien\vorlesungen\bph3\bph3_skriptum_jp_book\venv\lib\site-packa
 <p>Die Ergebnisse werden einerseits über die Probekörper-Länge andererseits im gesamten Probekörper gegen die Wurzel der Zeit dargestellt. Es wird dafür Pyplot von der <a class="reference external" href="https://matplotlib.org/stable/tutorials/introductory/pyplot.html">Matplotlib Library</a> verwendet.</p>
 <div class="section" id="verteilung-des-wassergehaltes-im-diskretisierten-probekorper">
 <h3>Verteilung des Wassergehaltes im diskretisierten Probekörper<a class="headerlink" href="#verteilung-des-wassergehaltes-im-diskretisierten-probekorper" title="Permalink to this headline">¶</a></h3>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Moisture content distribution in discretized specimen</span>
 <span class="n">w_cell</span> <span class="o">=</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w_cell</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">400</span><span class="p">])</span>
@@ -780,13 +793,13 @@ d:\onedrive - tu wien\vorlesungen\bph3\bph3_skriptum_jp_book\venv\lib\site-packa
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/FL_Numerik_23_0.png" src="_images/FL_Numerik_23_0.png" />
+<img alt="_images/FL_Numerik_24_0.png" src="_images/FL_Numerik_24_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="wassergehalt-im-probekorper-gegen-sqrt-zeit">
 <h3>Wassergehalt im Probekörper gegen <span class="math notranslate nohighlight">\(\sqrt{Zeit}\)</span><a class="headerlink" href="#wassergehalt-im-probekorper-gegen-sqrt-zeit" title="Permalink to this headline">¶</a></h3>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Moisture content in specimen over square root of time</span>
 <span class="n">w_total_dt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="n">dx</span>
@@ -802,13 +815,13 @@ d:\onedrive - tu wien\vorlesungen\bph3\bph3_skriptum_jp_book\venv\lib\site-packa
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/FL_Numerik_25_0.png" src="_images/FL_Numerik_25_0.png" />
+<img alt="_images/FL_Numerik_26_0.png" src="_images/FL_Numerik_26_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="relativer-wassergehalt-im-probekorper-gegen-sqrt-zeit">
 <h3>Relativer Wassergehalt im Probekörper gegen <span class="math notranslate nohighlight">\(\sqrt{Zeit}\)</span><a class="headerlink" href="#relativer-wassergehalt-im-probekorper-gegen-sqrt-zeit" title="Permalink to this headline">¶</a></h3>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Relative moisture content in specimen over square root of time</span>
 <span class="n">w_rel_dt</span> <span class="o">=</span> <span class="n">w_total_dt</span> <span class="o">/</span> <span class="p">(</span><span class="n">free_saturation</span> <span class="o">*</span> <span class="n">length</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
@@ -823,7 +836,7 @@ d:\onedrive - tu wien\vorlesungen\bph3\bph3_skriptum_jp_book\venv\lib\site-packa
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/FL_Numerik_27_0.png" src="_images/FL_Numerik_27_0.png" />
+<img alt="_images/FL_Numerik_28_0.png" src="_images/FL_Numerik_28_0.png" />
 </div>
 </div>
 </div>
